@@ -7,6 +7,7 @@ import java.util.zip.ZipFile;
 
 import javax.xml.parsers.*;
 
+import org.apache.commons.io.FileUtils;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
 
@@ -215,6 +216,35 @@ public class validateDTD  extends DefaultHandler
 	}
 
 	/**
+	 * Temporary unzip's a file to check against
+	 * ep-patent-document-v1-0.dtd dtd
+	 * 
+	 * @param entry			ZipEntry of a file in the zip file.
+	 * @return void
+	 * @throws IOException
+	 */
+	public static boolean tempCopyFile(String filename,String foldername,String path) throws IOException 
+	{
+		String tempfilename = path + File.separator + filename;
+		String fullfilename = path + File.separator + foldername + File.separator + filename;
+
+		File fileinfolder = new File(fullfilename);
+		File tempfile = new File(tempfilename);
+
+		validateDTD handler = new validateDTD();
+		handler.copyfile(fileinfolder, tempfile);
+
+		boolean validWIPO = handler.parseFile(tempfilename);
+
+		if(!validWIPO)
+		{
+			tempfile.delete();
+		}
+		
+		return validWIPO;
+	}
+
+	/**
 	 * Parses and validates a file with SAXParser.
 	 * 
 	 * @param fullfilename	File name including its path
@@ -306,5 +336,24 @@ public class validateDTD  extends DefaultHandler
 		} finally {
 			is.close();
 		}
+	}
+
+	/**
+	 * Common write file that will close after writing.
+	 * 
+	 * @param entry			ZipEntry of an file in the zip file.
+	 * @param file			File to be written.
+	 * @return void
+	 * @throws IOException
+	 */
+	private void copyfile(File fileinfolder, File tempfilename) throws IOException
+	{
+		File parent = fileinfolder.getParentFile();
+		if (parent != null)
+		{
+			parent.mkdirs();
+		}
+		
+		FileUtils.copyFile(fileinfolder, tempfilename);
 	}
 }
