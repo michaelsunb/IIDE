@@ -14,9 +14,21 @@
 			<%= request.getAttribute("message") %>
 			</span><%
 	   } %><br />
-		Files to upload:
+		Contact:
 		<br/>
-		<input type="file" size="50" name="file1">
+		<input type="text" size="50" name="contact" id="contact">
+		<br />
+		Email:
+		<br/>
+		<input type="text" size="50" name="email" id="email">
+		<br />
+		Description:
+		<br/>
+		<input type="text" size="50" name="description" id="description">
+		<br />
+		Zip File:
+		<br/>
+		<input type="file" size="50" name="file" id="file">
 		<br/>
 		<input type="submit" value="Upload">
 	</form>
