@@ -46,6 +46,8 @@ public class validateDTD  extends DefaultHandler
 		
 		zipFile = new ZipFile(path + File.separator  + filename);
 
+		//WriteXMLFile.main(path).setFolder(filename);
+
 		Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
 		validateDTD handler = new validateDTD();
@@ -174,15 +176,19 @@ public class validateDTD  extends DefaultHandler
 	private void unzipFile(ZipEntry entry, String zipfilename) throws IOException 
 	{
 		String name = entry.getName();
+		
+		/**
+		 * Remove the zip file extension name and
+		 * create a folder using the zip name only.
+		 */
+		String foldername = zipfilename.substring(0,zipfilename.length() - 4);
 
 		String fullfilename = path + File.separator  + 
-				/**
-				 * Remove the zip file extension name and
-				 * create a folder using the zip name only.
-				 */
-				zipfilename.substring(0,zipfilename.length() - 4) + 
+				foldername + 
 				File.separator  + name;
 		File file = new File(fullfilename);
+		
+		WriteXMLFile.main(path).setFolder(foldername);
 
 		if (file.exists())
 		{

@@ -68,7 +68,7 @@ public class upload extends HttpServlet {
 		 */
 		if (!ServletFileUpload.isMultipartContent(request))
 		{
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("upload.jsp");
 			return;
 		}
 
@@ -90,16 +90,17 @@ public class upload extends HttpServlet {
 		boolean isDTDValid =  false;
 
 		try {
+			WriteXMLFile writexml = WriteXMLFile.main(uploadPath);
 			/**
 			 *  Parses the request's content to extract file data.
 			 */
 			List<FileItem> formItems = upload.parseRequest(request);
 
-			if(formItems.size() != 1)
+			/*if(formItems.size() != 1)
 			{
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("upload.jsp");
 				return;
-			}
+			}*/
 
 			Iterator<FileItem> iter = formItems.iterator();
 
@@ -112,7 +113,33 @@ public class upload extends HttpServlet {
 				/**
 				 *  Processes only fields that are not form fields.
 				 */
-				if (!item.isFormField())
+				if (item.isFormField())
+				{
+	                // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+	                String fieldname = item.getFieldName();
+	                String fieldvalue = item.getString();
+
+	                if(fieldname.matches("contact"))
+	                {
+	                	writexml.setContact(fieldvalue);
+	                }
+
+	                if(fieldname.matches("email"))
+	                {
+	                	writexml.setEmail(fieldvalue);
+	                }
+
+	                if(fieldname.matches("description"))
+	                {
+	                	writexml.setDescription(fieldvalue);
+	                }
+
+	                if(fieldname.matches("patentname"))
+	                {
+	                	writexml.setPatentName(fieldvalue);
+	                }
+				}
+				else
 				{
 					String fileName = new File(item.getName()).getName();
 
@@ -160,6 +187,12 @@ public class upload extends HttpServlet {
 					}
 				}
 			}
+			
+			/*Part myStringPart = request.getPart("uploadform");
+			Scanner scanner = new Scanner(myStringPart.getInputStream());
+			
+			String myString = scanner.nextLine();
+			System.out.println(myString);*/
 
 			/**
 			 * Create a message if Zip file is uploaded
@@ -168,6 +201,8 @@ public class upload extends HttpServlet {
 			{
 				request.setAttribute("message", "XML is valid and has been uploaded successfully!");
 				request.setAttribute("messagecolour", "green");
+
+				writexml.doit();
 			}
 			else
 			{
@@ -179,6 +214,6 @@ public class upload extends HttpServlet {
 			request.setAttribute("message", "Upload was not successful.");
 			request.setAttribute("messagecolour", "red");
 		}
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/upload.jsp").forward(request,response);
 	}
 }

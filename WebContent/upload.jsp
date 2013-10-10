@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
 </head>
 <body>
-	<form name="form1" id="form1" action="/majorproject/upload" method="post" enctype="multipart/form-data">
+	<form name="uploadform" id="uploadform" action="/majorproject/upload" method="post" enctype="multipart/form-data">
 	<% if(request.getAttribute("message") != null)
 	   {
 			%><span style="color:<%= request.getAttribute("messagecolour") %>">
@@ -16,15 +16,19 @@
 	   } %><br />
 		Contact:
 		<br/>
-		<input type="text" size="50" name="contact" id="contact">
+		<input type="text" size="50" name="contact" id="contact" value="">
 		<br />
 		Email:
 		<br/>
-		<input type="text" size="50" name="email" id="email">
+		<input type="text" size="50" name="email" id="email" value="">
+		<br />
+		Patent Name:
+		<br/>
+		<input type="text" size="50" name="patentname" id="patentname" value="">
 		<br />
 		Description:
 		<br/>
-		<input type="text" size="50" name="description" id="description">
+		<input type="text" size="50" name="description" id="description" value="">
 		<br />
 		Zip File:
 		<br/>
