@@ -181,12 +181,6 @@ public class upload extends HttpServlet {
 					}
 				}
 			}
-			
-			/*Part myStringPart = request.getPart("uploadform");
-			Scanner scanner = new Scanner(myStringPart.getInputStream());
-			
-			String myString = scanner.nextLine();
-			System.out.println(myString);*/
 
 			/**
 			 * Create a message if Zip file is uploaded

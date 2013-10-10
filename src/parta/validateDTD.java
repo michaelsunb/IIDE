@@ -176,19 +176,20 @@ public class validateDTD  extends DefaultHandler
 	private void unzipFile(ZipEntry entry, String zipfilename) throws IOException 
 	{
 		String name = entry.getName();
-		
 		/**
 		 * Remove the zip file extension name and
 		 * create a folder using the zip name only.
 		 */
 		String foldername = zipfilename.substring(0,zipfilename.length() - 4);
 
+		WriteXMLFile writexml = WriteXMLFile.main(path);
+		writexml.setFolder(foldername);
+		String patentname = writexml.getPatentName();
+
 		String fullfilename = path + File.separator  + 
-				foldername + 
+				patentname + 
 				File.separator  + name;
 		File file = new File(fullfilename);
-
-		WriteXMLFile.main(path).setFolder(foldername);
 
 		if (file.exists())
 		{

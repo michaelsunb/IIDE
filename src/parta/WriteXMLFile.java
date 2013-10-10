@@ -70,9 +70,9 @@ public class WriteXMLFile {
 		patentname = ipatentname;
 	}
 	
-	public String getFolder()
+	public String getPatentName()
 	{
-		return folder;
+		return patentname;
 	}
 	
 	public boolean doit()
