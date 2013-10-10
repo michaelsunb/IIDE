@@ -1,6 +1,8 @@
 package parta;
 
 import java.io.File;
+import java.io.IOException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,6 +15,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
  
 public class WriteXMLFile {
 	private static WriteXMLFile instance = null;
@@ -35,7 +40,6 @@ public class WriteXMLFile {
 		
 		if(instance == null)
 		{
-			System.out.println(path);
 			instance = new WriteXMLFile();
 		}
 		return instance;
@@ -66,20 +70,46 @@ public class WriteXMLFile {
 		patentname = ipatentname;
 	}
 	
+	public String getFolder()
+	{
+		return folder;
+	}
+	
 	public boolean doit()
 	{
+		Document doc = null;
 	  try {
+		File xmlFile = new File(path + File.separator + "metadata.xml");
+
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
  
 		// root elements
-		Document doc = docBuilder.newDocument();
-		Element rootElement = doc.createElement("metadata");
-		doc.appendChild(rootElement);
- 
+		try
+		{
+			doc = docBuilder.parse(xmlFile);
+		}
+		catch (SAXException e)
+		{
+			//e.printStackTrace();
+			doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("metadata");
+			doc.appendChild(rootElement);
+		}
+		catch (IOException e)
+		{
+			//e.printStackTrace();
+			doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("metadata");
+			doc.appendChild(rootElement);
+		}
+
+		NodeList rootElementNode = doc.getElementsByTagName("metadata");
+		Node root = rootElementNode.item(0);
+
 		// efolder elements
 		Element efolder = doc.createElement("folder");
-		rootElement.appendChild(efolder);
+		root.appendChild(efolder);
  
 		// set attribute to efolder element
 		Attr attr = doc.createAttribute("folder-name");
@@ -119,7 +149,7 @@ public class WriteXMLFile {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(path + File.separator + "metadata.xml"));
+		StreamResult result = new StreamResult(xmlFile);
  
 		// Output to console for testing
 		// StreamResult result = new StreamResult(System.out);
@@ -127,7 +157,6 @@ public class WriteXMLFile {
 		transformer.transform(source, result);
 
 		return true;
- 
 	  } catch (ParserConfigurationException pce) {
 		pce.printStackTrace();
 		return false;

@@ -96,12 +96,6 @@ public class upload extends HttpServlet {
 			 */
 			List<FileItem> formItems = upload.parseRequest(request);
 
-			/*if(formItems.size() != 1)
-			{
-				response.sendRedirect("upload.jsp");
-				return;
-			}*/
-
 			Iterator<FileItem> iter = formItems.iterator();
 
 			/**

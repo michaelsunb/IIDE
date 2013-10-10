@@ -187,7 +187,7 @@ public class validateDTD  extends DefaultHandler
 				foldername + 
 				File.separator  + name;
 		File file = new File(fullfilename);
-		
+
 		WriteXMLFile.main(path).setFolder(foldername);
 
 		if (file.exists())
