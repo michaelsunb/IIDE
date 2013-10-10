@@ -1,4 +1,5 @@
-package parta;
+
+
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -88,9 +89,10 @@ public class upload extends HttpServlet {
 		String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 
 		boolean isDTDValid =  false;
+		boolean isPostValid =  true;
 
 		try {
-			WriteXMLFile writexml = WriteXMLFile.main(uploadPath);
+			WriteXMLFile writexml = WriteXMLFile.main(getServletContext().getRealPath("") + File.separator + "data");
 			/**
 			 *  Parses the request's content to extract file data.
 			 */
@@ -113,24 +115,28 @@ public class upload extends HttpServlet {
 	                String fieldname = item.getFieldName();
 	                String fieldvalue = item.getString();
 
-	                if(fieldname.matches("contact"))
+	                if(fieldvalue.matches("^[A-Za-z0-9 ]+$"))
 	                {
-	                	writexml.setContact(fieldvalue);
+		                if(fieldname.matches("title"))
+		                {
+		                	writexml.setTitle(fieldvalue);
+		                }
+		                else if(fieldname.matches("date"))
+		                {
+		                	writexml.setDate(fieldvalue);
+		                }
+		                else if(fieldname.matches("description"))
+		                {
+		                	writexml.setDescription(fieldvalue);
+		                }
+		                else if(fieldname.matches("keyword"))
+		                {
+		                	writexml.setKeyword(fieldvalue);
+		                }
 	                }
-
-	                if(fieldname.matches("email"))
+	                else
 	                {
-	                	writexml.setEmail(fieldvalue);
-	                }
-
-	                if(fieldname.matches("description"))
-	                {
-	                	writexml.setDescription(fieldvalue);
-	                }
-
-	                if(fieldname.matches("patentname"))
-	                {
-	                	writexml.setPatentName(fieldvalue);
+	                	isPostValid = false;
 	                }
 				}
 				else
@@ -185,16 +191,27 @@ public class upload extends HttpServlet {
 			/**
 			 * Create a message if Zip file is uploaded
 			 */
-			if(isDTDValid)
+			if(isDTDValid && isPostValid)
 			{
 				request.setAttribute("message", "XML is valid and has been uploaded successfully!");
 				request.setAttribute("messagecolour", "green");
 
 				writexml.doit();
 			}
-			else
+			else if(isDTDValid && !isPostValid)
+			{
+				request.setAttribute("message", "You entered an incorrect value.");
+				request.setAttribute("messagecolour", "red");
+			}
+			else if(!isDTDValid && isPostValid)
 			{
 				request.setAttribute("message", "Upload was not successful.");
+				request.setAttribute("messagecolour", "red");
+			}
+			else
+			{
+				request.setAttribute("message",
+						"Upload was not successful and you entered an incorrect value.");
 				request.setAttribute("messagecolour", "red");
 			}
 		} catch (Exception ex) {

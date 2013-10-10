@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<company>
+	<user id="1001">
+		<username>yong</username>
+		<password>mook kim</password>
+		<usertype>mkyong</usertype>
+		<name>100000</name>
+		<gender>100000</gender>
+		<living>100000</living>
+		<apply>100000</apply>
+		<address>100000</address>
+		<phone>100000</phone>
+		<email>100000</email>
+	</user>
+	<user id="2001">
+		<username>low</username>
+		<password>yin fong</password>
+		<usertype>fong fong</usertype>
+		<name>100000</name>
+		<gender>100000</gender>
+		<living>100000</living>
+		<apply>100000</apply>
+		<address>100000</address>
+		<phone>100000</phone>
+		<email>100000</email>
+	</user>
+    <user id="2002">
+		<username>hi</username>
+		<password>yin fong</password>
+		<usertype>fong fong</usertype>
+		<name>100000</name>
+		<gender>100000</gender>
+		<living>100000</living>
+		<apply>100000</apply>
+		<address>100000</address>
+		<phone>100000</phone>
+		<email>100000</email>
+	</user>
+</company>
+

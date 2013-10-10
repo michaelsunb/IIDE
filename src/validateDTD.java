@@ -1,4 +1,5 @@
-package parta;
+
+
 
 import java.io.*;
 import java.util.Enumeration;
@@ -45,8 +46,6 @@ public class validateDTD  extends DefaultHandler
 		path = ipath;
 		
 		zipFile = new ZipFile(path + File.separator  + filename);
-
-		//WriteXMLFile.main(path).setFolder(filename);
 
 		Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
@@ -182,12 +181,8 @@ public class validateDTD  extends DefaultHandler
 		 */
 		String foldername = zipfilename.substring(0,zipfilename.length() - 4);
 
-		WriteXMLFile writexml = WriteXMLFile.main(path);
-		writexml.setFolder(foldername);
-		String patentname = writexml.getPatentName();
-
 		String fullfilename = path + File.separator  + 
-				patentname + 
+				foldername + 
 				File.separator  + name;
 		File file = new File(fullfilename);
 
@@ -219,7 +214,15 @@ public class validateDTD  extends DefaultHandler
 
 		validWIPO = this.parseFile(fullfilename);
 
-		file.delete();
+		if(validWIPO)
+		{
+			WriteXMLFile.main("")
+				.setValidWIPOXml(name.substring(0,name.length() - 4));
+		}
+		else
+		{
+			file.delete();
+		}
 	}
 
 	/**
