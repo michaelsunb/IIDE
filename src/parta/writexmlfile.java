@@ -1,5 +1,4 @@
-
-
+package parta;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +18,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
- 
-public class WriteXMLFile {
-	private static WriteXMLFile instance = null;
+
+
+/**
+ * Creates an XML file.
+ * 
+ * @email: s3110401@student.rmit.edu.au
+ * @author Michaelsun Baluyos
+ *
+ */
+public class writexmlfile {
+	private static writexmlfile instance = null;
 	private static String path;
 
 	private String title;
@@ -30,14 +37,19 @@ public class WriteXMLFile {
 	private String keyword;
 	private String validwipoxml;
 
-	//private String[] errormsg;
-
-	protected WriteXMLFile()
+	protected writexmlfile()
 	{
 		// Exists only to defeat instantiation.
 	}
 
-	public static WriteXMLFile main(String ipath)
+	/**
+	 * Create a singleton because this class is called
+	 * in several other classes.
+	 * 
+	 * @param ipath		path name for the web app.
+	 * @return			returns the signleton class.
+	 */
+	public static writexmlfile main(String ipath)
 	{
 		if(!ipath.isEmpty())
 		{
@@ -46,16 +58,25 @@ public class WriteXMLFile {
 		
 		if(instance == null)
 		{System.out.println(path);
-			instance = new WriteXMLFile();
+			instance = new writexmlfile();
 		}
 		return instance;
 	}
-	
+
+	/**
+	 * Set the values and put them into an object.
+	 * 
+	 * @param ititle
+	 * @param ikeyword
+	 * @param idescription
+	 * @param idate
+	 * @param ivalidwipoxml
+	 */
 	public void setTitle(String ititle)
 	{
 		title = ititle;
 	}
-	
+
 	public void setKeyword(String ikeyword)
 	{
 		keyword = ikeyword;
@@ -80,105 +101,128 @@ public class WriteXMLFile {
 	{
 		return validwipoxml;
 	}
-	
-	public boolean doit()
+
+	/**
+	 * Let's create the XML file as below:
+	 * 
+	 * <documents>
+	 *    <document id="">
+	 *       <title></title>
+	 *       <keywords></keywords>
+	 *       <date></date>
+	 *       <description></description>
+	 *    </document>
+	 * </documents>
+	 * 
+	 */
+	public void doit()
 	{
 		Document doc = null;
 
-		/*if(errormsg.length != 0)
-		{
-			for(String emsg : errormsg)
-			{
-				System.out.println(emsg);
-			}
-			return false;
-		}*/
-
 		try {
+			/**
+			 * create or modify doc.xml file
+			 */
 			File xmlFile = new File(path + File.separator + "doc.xml");
 	
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 	 
-			// root elements
+			/**
+			 * root elements
+			 */
 			try
 			{
+				/**
+				 * We see if the xml file is already there.
+				 */
 				doc = docBuilder.parse(xmlFile);
 			}
 			catch (SAXException e)
 			{
-				//e.printStackTrace();
+				/**
+				 * If not we create a new file with new elements.
+				 */
 				doc = docBuilder.newDocument();
 				Element rootElement = doc.createElement("documents");
 				doc.appendChild(rootElement);
 			}
 			catch (IOException e)
 			{
-				//e.printStackTrace();
 				doc = docBuilder.newDocument();
 				Element rootElement = doc.createElement("documents");
 				doc.appendChild(rootElement);
 			}
-	
+
+			/**
+			 * Retrieve the root element, which is documents.
+			 */
 			NodeList rootElementNode = doc.getElementsByTagName("documents");
 			Node root = rootElementNode.item(0);
-	
-			// efolder elements
+
+			/**
+			 * create document child elements
+			 */
 			Element edocument = doc.createElement("document");
 			root.appendChild(edocument);
-	 
-			// set attribute to efolder element
-			Attr attr = doc.createAttribute("id");
-			attr.setValue(validwipoxml);
-			edocument.setAttributeNode(attr);
-	 
-			// shorten way
-			// efolder.setAttribute("id", "1");
-	 
-			// firstname elements
-			/*Element firstname = doc.createElement("firstname");
-			firstname.appendChild(doc.createTextNode("yong"));
-			efolder.appendChild(firstname);
 
-			// lastname elements
-			Element lastname = doc.createElement("lastname");
-			lastname.appendChild(doc.createTextNode("mook kim"));
-			staff.appendChild(lastname);*/
+			int noelements = doc.getElementsByTagName("document").getLength();
 
-			Element epatentname = doc.createElement("title");
-			epatentname.appendChild(doc.createTextNode(title));
-			edocument.appendChild(epatentname);
+			/**
+			 * create id attribute to document element
+			 */
+			Attr idattr = doc.createAttribute("id");
+			idattr.setValue("DOC0000" + noelements);
+			edocument.setAttributeNode(idattr);
 
-			Element edescription = doc.createElement("keywords");
-			edescription.appendChild(doc.createTextNode(keyword));
+			/**
+			 * create filename attribute to document element
+			 */
+			Attr filattr = doc.createAttribute("filename");
+			filattr.setValue(validwipoxml);
+			edocument.setAttributeNode(filattr);
+
+			/**
+			 * create title child elements
+			 */
+			Element etitle = doc.createElement("title");
+			etitle.appendChild(doc.createTextNode(title));
+			edocument.appendChild(etitle);
+
+			/**
+			 * create keywords child elements
+			 */
+			Element ekeyword = doc.createElement("keywords");
+			ekeyword.appendChild(doc.createTextNode(keyword));
+			edocument.appendChild(ekeyword);
+
+			/**
+			 * create date child elements
+			 */
+			Element edate = doc.createElement("date");
+			edate.appendChild(doc.createTextNode(date));
+			edocument.appendChild(edate);
+
+			/**
+			 * create description child elements
+			 */
+			Element edescription = doc.createElement("description");
+			edescription.appendChild(doc.createTextNode(description));
 			edocument.appendChild(edescription);
-
-			Element econtact = doc.createElement("date");
-			econtact.appendChild(doc.createTextNode(date));
-			edocument.appendChild(econtact);
-
-			Element eemail = doc.createElement("description");
-			eemail.appendChild(doc.createTextNode(description));
-			edocument.appendChild(eemail);
 	 
-			// write the content into xml file
+			/**
+			 *  write the content into xml file
+			 */
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 			StreamResult result = new StreamResult(xmlFile);
 	 
-			// Output to console for testing
-			// StreamResult result = new StreamResult(System.out);
-	 
 			transformer.transform(source, result);
-	
-			return true;
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
-			return false;
 		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
-			return false;
 		}
 	}
 }

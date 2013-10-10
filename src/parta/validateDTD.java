@@ -1,5 +1,4 @@
-
-
+package parta;
 
 import java.io.*;
 import java.util.Enumeration;
@@ -16,7 +15,7 @@ import org.xml.sax.helpers.*;
  * Class that checks a zip file for a valid XML against
  * a DTD file (ep-patent-document-v1-0.dtd) within /upload/
  * 
- * email: s3110401@student.rmit.edu.au
+ * @email: s3110401@student.rmit.edu.au
  * @author Michaelsun Baluyos
  *
  */
@@ -216,21 +215,21 @@ public class validateDTD  extends DefaultHandler
 
 		if(validWIPO)
 		{
-			WriteXMLFile.main("")
+			writexmlfile.main("")
 				.setValidWIPOXml(name.substring(0,name.length() - 4));
 		}
-		else
-		{
-			file.delete();
-		}
+
+		file.delete();
 	}
 
 	/**
-	 * Temporary unzip's a file to check against
+	 * Temporary copy a file nd check against
 	 * ep-patent-document-v1-0.dtd dtd
 	 * 
-	 * @param entry			ZipEntry of a file in the zip file.
-	 * @return void
+	 * @param filename		file name of file to be copied
+	 * @param foldername	folder name where the file is.
+	 * @param path			path of the foler and file
+	 * @return boolean
 	 * @throws IOException
 	 */
 	public static boolean tempCopyFile(String filename,String foldername,String path) throws IOException 
@@ -255,7 +254,7 @@ public class validateDTD  extends DefaultHandler
 	}
 
 	/**
-	 * Parses and validates a file with SAXParser.
+	 * Parses and validates a file with DocumentBuilder.
 	 * 
 	 * @param fullfilename	File name including its path
 	 * @return boolean		Returns if valid against
@@ -349,10 +348,10 @@ public class validateDTD  extends DefaultHandler
 	}
 
 	/**
-	 * Common write file that will close after writing.
+	 * Common copy file.
 	 * 
-	 * @param entry			ZipEntry of an file in the zip file.
-	 * @param file			File to be written.
+	 * @param fileinfolder			ZipEntry of an file in the zip file.
+	 * @param tempfilename			File to be written.
 	 * @return void
 	 * @throws IOException
 	 */

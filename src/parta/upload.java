@@ -1,5 +1,4 @@
-
-
+package parta;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,11 +22,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * upload servlet that will only temporary upload one 
  * file at a time and only a zip file to /upload/
  * 
- * email: s3110401@student.rmit.edu.au
+ * @email: s3110401@student.rmit.edu.au
  * @author Michaelsun Baluyos
  *
  */
-@WebServlet("/upload")
 public class upload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -92,7 +89,7 @@ public class upload extends HttpServlet {
 		boolean isPostValid =  true;
 
 		try {
-			WriteXMLFile writexml = WriteXMLFile.main(getServletContext().getRealPath("") + File.separator + "data");
+			writexmlfile writexml = writexmlfile.main(getServletContext().getRealPath("") + File.separator + "data");
 			/**
 			 *  Parses the request's content to extract file data.
 			 */
@@ -111,11 +108,17 @@ public class upload extends HttpServlet {
 				 */
 				if (item.isFormField())
 				{
-	                // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+	                /**
+	                 *  Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+	                 */
 	                String fieldname = item.getFieldName();
 	                String fieldvalue = item.getString();
 
-	                if(fieldvalue.matches("^[A-Za-z0-9 ]+$"))
+	                /**
+	                 * only number, letters, dots. hyphens (-) and underscore _
+	                 * from input text fields
+	                 */
+	                if(fieldvalue.matches("^[A-Za-z0-9 _.-]+$"))
 	                {
 		                if(fieldname.matches("title"))
 		                {
@@ -189,7 +192,7 @@ public class upload extends HttpServlet {
 			}
 
 			/**
-			 * Create a message if Zip file is uploaded
+			 * Create a messages
 			 */
 			if(isDTDValid && isPostValid)
 			{

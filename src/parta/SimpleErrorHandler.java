@@ -1,5 +1,4 @@
-
-
+package parta;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -8,7 +7,7 @@ import org.xml.sax.SAXParseException;
 /**
  * Error Handler needed for SAXParser validation
  * 
- * email: s3110401@student.rmit.edu.au
+ * @email: s3110401@student.rmit.edu.au
  * @author Michaelsun Baluyos
  *
  */

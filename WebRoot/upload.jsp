@@ -8,23 +8,23 @@
 	   } %><br />
 		Title:
 		<br/>
-		<input type="text" size="50" name="title" id="title" value="Test Title">
+		<input type="text" size="50" name="title" id="title" value="" required="required">
 		<br />
 		Keyword:
 		<br/>
-		<input type="text" size="50" name="keyword" id="keyword" value="Test Keyword">
+		<input type="text" size="50" name="keyword" id="keyword" value="" required="required">
 		<br />
 		Date:
 		<br/>
-		<input type="text" size="50" name="date" id="date" value="Test Date">
+		<input type="text" size="50" name="date" id="date" value="" required="required">
 		<br />
 		Description:
 		<br/>
-		<input type="text" size="50" name="description" id="description" value="Test Description">
+		<input type="text" size="50" name="description" id="" value="" required="required">
 		<br />
 		Zip File:
 		<br/>
-		<input type="file" size="50" name="file" id="file">
+		<input type="file" size="50" name="file" id="file" required="required">
 		<br/>
 		<input type="submit" value="Upload">
 	</form>
