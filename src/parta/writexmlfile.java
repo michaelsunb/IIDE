@@ -106,7 +106,7 @@ public class writexmlfile {
 	 * Let's create the XML file as below:
 	 * 
 	 * <documents>
-	 *    <document id="">
+	 *    <document filename="" id="">
 	 *       <title></title>
 	 *       <keywords></keywords>
 	 *       <date></date>

@@ -118,7 +118,7 @@ public class upload extends HttpServlet {
 	                 * only number, letters, dots. hyphens (-) and underscore _
 	                 * from input text fields
 	                 */
-	                if(fieldvalue.matches("^[A-Za-z0-9 _.-]+$"))
+	                if(fieldvalue.matches("^[A-Za-z0-9 _,.-]+$"))
 	                {
 		                if(fieldname.matches("title"))
 		                {
@@ -174,11 +174,14 @@ public class upload extends HttpServlet {
 							in.close();
 						}
 
-						/**
-						 * Call ValidateDTD function and returns
-						 * true or false if the XML is valid.
-						 */
-						isDTDValid = validateDTD.main(uploadPath,fileName);
+						if(isPostValid)
+						{
+							/**
+							 * Call ValidateDTD function and returns
+							 * true or false if the XML is valid.
+							 */
+							isDTDValid = validateDTD.main(uploadPath,fileName);
+						}
 
 						/**
 						 * Delete zip file for storage purposes.
