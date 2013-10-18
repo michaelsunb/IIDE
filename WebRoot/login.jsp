@@ -1,10 +1,13 @@
 <%@include file="header.jsp" %>
 
 <%		String loginName =  (String)session.getAttribute("username");
+		String Usertype =  (String)session.getAttribute("usertype");
+		
+		//welcome page for login user
         if(loginName!=null)
             {
             out.println("<p style='text-align:center;''>");
-             out.println("Welcome  "+loginName+"  You can logout <a href=\"logout.jsp\" >Here</a>");
+             out.println("Welcome  "+loginName+"!<br /> Your user type is: " +Usertype+ "<br />You can logout <a href=\"logout.jsp\" >Here</a>");
              out.println("</p>");
             }
         else 

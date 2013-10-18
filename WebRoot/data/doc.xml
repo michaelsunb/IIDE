@@ -1,2 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?><documents></documents>
+<?xml version="1.0" encoding="UTF-8"?>
+<documents>
+  <document id="DOC00001">
+    <title>1</title>
+    <keywords>1</keywords>
+    <applicant>1</applicant>
+    <date>1</date>
+    <description>1</description>
+  </document>
+  <document id="DOC00002">
+    <title>2</title>
+    <keywords>3</keywords>
+    <applicant>4</applicant>
+    <date>5</date>
+    <description>6</description>
+  </document>
+ <document id="DOC00003">
+    <title>3</title>
+    <keywords>3</keywords>
+    <applicant>4</applicant>
+    <date>5</date>
+    <description>6</description>
+  </document>
+</documents>
 

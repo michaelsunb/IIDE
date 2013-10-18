@@ -1,6 +1,14 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ page import="java.io.*"%>
 <%
+/**
+ * Simple document system front page for presentation purpose 
+ * 
+ * email: s3440760@student.rmit.edu.au
+ * @author Yongjiang Zhang
+ *
+ */
+ 
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -47,6 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <li><a href="login.jsp">Login</a></li>
           <li><a href="register.jsp">Register</a></li>
           <li><a href="upload.jsp">Upload</a></li>
-          <li><a href="documents.jsp">Documents</a></li>
+          <li><a href="docList.jsp">Documents</a></li>
         </ul>
       </div>

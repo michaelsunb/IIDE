@@ -1,13 +1,15 @@
 <%@include file="header.jsp" %>
-<%@page import="user.userlist" %>
+<%@page import="doc.docList" %>
+<%@page import="doc.Docs" %>
 <%
-	user.userlist usrlist = new user.userlist();
-	//System.out.println(request.getRealPath("/"));
-	
-	String str = usrlist.Read();
-	System.out.println(str);
-	
+List<Docs> lst = new docList().Read();
+		Docs doclist = lst.get(1);
+	  String title = doclist.getTitle();
+	  String keywords = doclist.getKeywords();
+	  String applicant = doclist.getApplicant();
+	  String date = doclist.getDate();
+	  String description = doclist.getDescription();
 %>
-<%=str%>
+<%=title%>
 </body>
 </html>
